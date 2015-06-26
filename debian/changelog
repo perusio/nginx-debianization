@@ -1,3 +1,10 @@
+nginx (1.9.2-perusio.1.0) UNRELEASED; urgency=medium
+
+  * New upstream version. Enabled MD5 and SHA1 assembly compilation
+    options.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 26 Jun 2015 20:07:54 +0200
+
 nginx (1.9.0-peursio.1.0) unstable; urgency=medium
 
   * New upstream release.
