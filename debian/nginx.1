@@ -1,0 +1,147 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "NGINX" "1" "September 2011" "" ""
+.
+.SH "NAME"
+\fBnginx\fR \- HTTP and reverse proxy server, mail proxy server
+.
+.SH "SYNOPSIS"
+\fBnginx\fR [ options ]
+.
+.P
+options: [ \-g directives ] [ \-? | \-h ] [ \-p prefix ] [ \-s signal ] [ \-t ] [ \-v ] [ \-V ]
+.
+.SH "DESCRIPTION"
+nginx (pronounced "engine x") is an HTTP server that also functions as an HTTP reverse proxy and/or a mail proxy\. nginx is known for is high performance, stability, rich feature set, simple configuration, and low resource consumption\.
+.
+.SH "OPTIONS"
+\fB\-?,\-h\fR Short help\.
+.
+.P
+\fB\-c file\fR Use an alternative configuration file\.
+.
+.P
+\fB\-g directives\fR Set global configuration directives\. See EXAMPLES for details\.
+.
+.P
+\fB\-p prefix\fR Set prefix path\. Default value is \fB/usr\fR\.
+.
+.P
+\fB\-q\fR Suppress non\-error messages during configuration testing\.
+.
+.P
+\fB\-s signal\fR Send a signal to the master process\. The signal can be one of: \fBstop\fR, \fBquit\fR, \fBreopen\fR, \fBreload\fR\. The following table shows the corresponding system signals\.
+.
+.IP "\(bu" 4
+\fBstop\fR SIGTERM
+.
+.IP "\(bu" 4
+\fBquit\fR SIGQUIT
+.
+.IP "\(bu" 4
+\fBreopen\fR SIGUSR1
+.
+.IP "\(bu" 4
+\fBreload\fR SIGHUP
+.
+.IP "" 0
+.
+.P
+\fB\-t\fR Don\'t run, just test the configuration file\. The nginx checks configuration for correct syntax and then tries to open files referred in configuration\.
+.
+.P
+\fB\-v\fR Print nginx version\.
+.
+.P
+\fB\-V\fR Print nginx version, compiler version and the configure script parameters\.
+.
+.SH "SIGNALS"
+Nginx master process can handle the following signals\.
+.
+.P
+\fBSIGINT\fR, \fBSIGTERM\fR Shut down promptly\. \fBSIGHUP\fR Reload the configuration, launch new worker process(es) using this new configuration,
+.
+.IP "" 4
+.
+.nf
+
+        while gracefully shutting down the old worker processes
+.
+.fi
+.
+.IP "" 0
+.
+.P
+\fBSIGQUIT\fR Shut down gracefully\. \fBSIGUSR1\fR Reopen log files\. \fBSIGUSR2\fR Upgrade nginx executable on the fly\. \fBSIGWINCH\fR Gracefully shutdown all worker processes\.
+.
+.P
+Usually there\'s no need to explicitly control worker processes, nevertheless you can send them some signals:
+.
+.P
+\fBSIGTERM\fR Shut down worker processes promptly\. \fBSIGQUIT\fR Shut down worker processes gracefully\. \fBSIGUSR1\fR Reopen log files\.
+.
+.SH "DEBUGGING LOG"
+To enable the debug log level, the \fBconfigure\fR script requires the \fB\-\-with\-debug\fR option:
+.
+.IP "" 4
+.
+.nf
+
+\&\./configure \-\-with\-debug \.\.\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+and then set the debug level of the \fBerror_log\fR:
+.
+.IP "" 4
+.
+.nf
+
+error_log /path/to/log debug;
+.
+.fi
+.
+.IP "" 0
+.
+.P
+It is also possible to enable the debugging for a specific IP address, for example:
+.
+.IP "" 4
+.
+.nf
+
+events {
+    debug_connection 127\.0\.0\.1;
+}
+.
+.fi
+.
+.IP "" 0
+.
+.SH "FILES"
+\fB/etc/nginx\fR Nginx configuration directory\.
+.
+.SH "EXIT STATUS"
+Exit status is 0 on success, or 1 on failure\.
+.
+.SH "COPYRIGHT"
+Nginx is Copyright (C) 2002\-2011 Igor Sysoev under the terms of a BSD license\.
+.
+.SH "SEE ALSO"
+thttpd(8), apache2(8), lighttpd(8), openssl(1) and the online documentation http://nginx\.org/ \fIhttp://nginx\.org\fR and \fIhttp://sysoev\.ru/nginx\fR\.
+.
+.P
+For questions and technical support, please refer to \fIhttp://nginx\.org/en/support\.html\fR\.
+.
+.SH "AVAILABILITY"
+The latest version of nginx is available at the svn repository for this project is at: \fIsvn://svn\.nginx\.org/nginx\fR\.
+.
+.SH "AUTHOR"
+Nginx is authored by Igor Sysoev <igor@sysoev\.ru>\.
+.
+.P
+Manual page written by Antonio P\. P\. Almeida <appa@perusio\.net> based on the manual page written by Sergey A\. Osokin <osa@FreeBSD\.org\.ru> that is distributed with the Nginx source\.
