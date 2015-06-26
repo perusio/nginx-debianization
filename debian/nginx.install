@@ -1,0 +1,6 @@
+objs/nginx usr/sbin
+debian/conf/* etc/nginx
+debian/nginx_ensite    usr/sbin
+debian/bash_completion.d/nginx_ensite etc/bash_completion.d
+html/* usr/share/nginx/www/
+debian/ufw.profile etc/ufw/applications.d/nginx

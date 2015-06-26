@@ -1,0 +1,1169 @@
+nginx (1.9.0-peursio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+  * Removed cache purge and upstream fair modules.
+
+  * Added the stream module and friends.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 10 May 2015 22:50:38 +0200
+
+nginx (1.7.9-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 20 Jan 2015 19:19:55 +0100
+
+nginx (1.7.7-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 31 Oct 2014 23:18:44 +0100
+
+nginx (1.7.6-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 04 Oct 2014 02:18:21 +0200
+
+nginx (1.7.5-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+  * Now the http_auth_request module is in core.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 22 Sep 2014 01:59:41 +0200
+
+nginx (1.7.4-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+  
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 06 Sep 2014 15:55:05 +0200
+
+nginx (1.7.3-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 09 Jul 2014 12:02:21 +0200
+
+nginx (1.7.2-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 29 Jun 2014 05:14:47 +0200
+
+nginx (1.7.0-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 24 May 2014 17:30:17 +0200
+
+nginx (1.5.13-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 10 Apr 2014 19:48:38 +0200
+
+nginx (1.5.12-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 19 Mar 2014 01:10:06 +0100
+
+nginx (1.5.11-perusio.1.0) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 05 Mar 2014 09:24:21 +0100
+
+nginx (1.5.10-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 05 Feb 2014 01:05:02 +0100
+
+nginx (1.5.9-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 28 Jan 2014 09:23:42 +0100
+
+nginx (1.5.8-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 20 Dec 2013 14:53:54 +0100
+
+nginx (1.5.7-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added ngx_cache_purge module to build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 28 Nov 2013 09:22:51 +0100
+
+nginx (1.5.6-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Enabled PCRE JIT.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 24 Oct 2013 02:22:51 +0200
+
+nginx (1.5.5-perusio.1.0) unstable; urgency=low
+
+  * New upstream release. Removed sticky module.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 18 Sep 2013 11:54:28 +0200
+
+nginx (1.5.1-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 17 Jun 2013 00:10:40 +0200
+
+nginx (1.4.0-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 30 Apr 2013 11:54:51 +0200
+
+nginx (1.3.15-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Removed tengine modules from build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 11 Apr 2013 09:56:45 +0200
+
+nginx (1.3.11-perusio.1.2) unstable; urgency=low
+
+  * Added configure options to build nginx as position independent code.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 31 Jan 2013 09:30:51 +0100
+
+nginx (1.3.11-perusio.1.1) UNRELEASED; urgency=low
+
+   * Updated the Lua module.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 30 Jan 2013 20:48:13 +0100
+
+nginx (1.3.11-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * New version of the modules.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 17 Jan 2013 16:12:00 +0100
+
+nginx (1.3.10-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * New upstream release.
+
+  * New version of the modules.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 31 Dec 2012 03:23:41 +0100
+
+nginx (1.3.8-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+  * New version of the modules.
+  
+  * New Drupal configuration.
+  
+  * New SPDY patch.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 18 Nov 2012 22:18:59 +0100
+
+nginx (1.3.6-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 21 Sep 2012 20:04:35 +0200
+
+nginx (1.3.5-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Adding support for SPDY based on Nginx official patch.
+  
+  * Updated configurations.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 12 Jun 2012 00:10:18 +0200
+
+nginx (1.3.0-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 17 May 2012 02:07:19 +0200
+
+nginx (1.2.0-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+    
+  * Updated configurations.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 24 Apr 2012 00:01:29 +0200
+
+nginx (1.1.19-perusio.1.1) unstable; urgency=low
+
+  * Added luajit to build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 15 Apr 2012 19:58:08 +0200
+
+nginx (1.1.19-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Redmine config added.
+  
+  * Configs updated.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 15 Apr 2012 18:30:52 +0200
+
+nginx (1.1.18-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+   
+  * Configs updated.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 15 Apr 2012 18:30:16 +0200
+
+nginx (1.1.17-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Configs updated.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 17 Mar 2012 00:55:43 +0100
+
+nginx (1.1.16-perusio.1.1) unstable; urgency=low
+
+  * Added the ngx_devel_kit module. Required by set_by_lua and set_by_lua_file.
+  
+  * Added the squirrelmail config.
+  
+  * nginx_ensite updated.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 12 Mar 2012 13:26:57 +0100
+
+nginx (1.1.16-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added the HTTP slice module from Tengine.
+  
+  * New configs.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 02 Mar 2012 01:22:13 +0100
+
+nginx (1.1.15-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added the delay module to the build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 16 Feb 2012 20:00:22 +0000
+
+nginx (1.1.14-perusio.1.1) unstable; urgency=low
+
+  * Cosocket support for the embedded Lua module added.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 01 Feb 2012 17:41:11 +0000
+
+nginx (1.1.14-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * All modules updated. The Lua module has cosocket support.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 31 Jan 2012 19:50:50 +0000
+
+nginx (1.1.13-perusio.1.2) unstable; urgency=low
+
+  * Built using LuaJIT2.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 17 Jan 2012 02:22:46 +0000
+
+nginx (1.1.13-perusio.1.1) unstable; urgency=low
+
+  * Build against new release of OpenSSL with security fixes.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 17 Jan 2012 02:12:22 +0000
+
+nginx (1.1.13-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Updated the default config.
+  
+  * Added the footer filter module from Tengone to the build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 17 Jan 2012 01:51:13 +0000
+
+nginx (1.1.12-perusio.1.4) unstable; urgency=low
+
+  * Back to the old numbering scheme.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 13 Jan 2012 03:34:06 +0000
+
+nginx (1.1.12-perusio.1.3) unstable; urgency=low
+
+  * New numbering in accordance with debian numbering scheme.
+  
+  * Embedded Lua module uses LuaJIT 2 as the library.
+  
+  * Updated configs.
+  
+  * New upstream versions of the Lua and http concat modules.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 13 Jan 2012 03:23:46 +0000
+
+nginx (1.1.12-perusio.1.2) unstable; urgency=low
+
+  * Enabled SCGI support.
+  
+  * Fixed issue with uWSGI.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 31 Dec 2011 18:16:17 +0000
+
+nginx (1.1.12-perusio.1.1) unstable; urgency=low
+
+  * Fixed mess with rules file.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 31 Dec 2011 17:58:45 +0000
+
+nginx (1.1.12-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added uWSGI support to the build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 31 Dec 2011 16:49:57 +0000
+
+nginx (1.1.11-perusio.1.3) unstable; urgency=low
+
+  * Resetting the patching mess.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 14 Dec 2011 18:43:45 +0000
+
+nginx (1.1.11-perusio.1.2) unstable; urgency=low
+
+  * Added initial busy lock patch for FCGI and related.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 14 Dec 2011 18:35:46 +0000
+
+nginx (1.1.11-perusio.1.1) unstable; urgency=low
+
+  * Removed the HTML strip module from the build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 14 Dec 2011 17:19:50 +0000
+
+nginx (1.1.11-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added the HTML strip module to the build.
+  
+  * Added the embedded Lua module to the build.
+  
+  * Patches by Maxim Dounin for busy locks in cache manager.
+  
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 13 Dec 2011 05:05:24 +0000
+
+nginx (1.1.10-perusio.1.3) unstable; urgency=low
+
+  * New build with the http concat module.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 05 Dec 2011 06:49:09 +0000
+
+nginx (1.1.10-perusio.1.2) unstable; urgency=low
+
+  * Added the http concat module from tengine for testing it out.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 04 Dec 2011 17:41:44 +0000
+
+nginx (1.1.10-perusio.1.1) unstable; urgency=low
+
+  * Enabled the image filter module.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 03 Dec 2011 19:23:29 +0000
+
+nginx (1.1.10-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 30 Nov 2011 16:14:03 +0000
+
+nginx (1.1.9-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Dropped debian patch for IPv6 support.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 29 Nov 2011 03:19:30 +0000
+
+nginx (1.1.8-perusio.1.1) unstable; urgency=low
+
+  * Added patches for unlocking mutexes in shared memory zone.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 24 Nov 2011 07:53:50 +0000
+
+nginx (1.1.8-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 15 Nov 2011 02:35:06 +0000
+
+nginx (1.1.7-perusio.1.3) unstable; urgency=low
+
+  * Fixed incorrect rules file.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 12 Nov 2011 10:14:11 +0000
+
+nginx (1.1.7-perusio.1.2) unstable; urgency=low
+
+  * Enabled the SSI module.
+  
+  * New configs.
+  
+  * Updated the fair uptream module.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 12 Nov 2011 09:48:50 +0000
+
+nginx (1.1.7-perusio.1.1) unstable; urgency=low
+
+  * Fixed error in rules file.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 06 Nov 2011 17:39:18 +0000
+
+nginx (1.1.7-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added the sticky module to the package.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 06 Nov 2011 17:12:44 +0000
+
+nginx (1.1.6-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Dropped the purge module from the build.
+  
+  * New config for drupal included.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 26 Oct 2011 19:36:09 +0100
+
+nginx (1.1.4-perusio.1.1) unstable; urgency=low
+
+  * Upstream double free patch added.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 21 Sep 2011 17:09:09 +0100
+
+nginx (1.1.4-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * New patches added.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 20 Sep 2011 23:49:33 +0100
+
+nginx (1.1.3-perusio.1.2) unstable; urgency=low
+
+  * Reinstated the upstream keepalive module.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 16 Sep 2011 18:00:46 +0100
+
+nginx (1.1.3-perusio.1.1) unstable; urgency=low
+
+  * Reinstated the upstream keepalive support.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 16 Sep 2011 17:31:11 +0100
+
+nginx (1.1.3-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added the MP4 streaming module to the build.
+  
+  * Updated the Drupal config.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 16 Sep 2011 01:45:53 +0100
+
+nginx (1.1.2-perusio.1.1) unstable; urgency=low
+
+  * Issues with versions fixed.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 11 Sep 2011 16:36:14 +0100
+
+nginx (1.1.2-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added a new ronn based manpage.
+  
+  * New versions of upstream keepalive and purge.
+  
+  * New example configs version.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 11 Sep 2011 14:57:14 +0100
+
+nginx (1.1.0-perusio.1.1) unstable; urgency=low
+
+  * Added the purge module.
+  
+  * Patched for Linux 3.0 build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sun, 21 Aug 2011 03:15:41 +0100
+
+nginx (1.1.0-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added the Auth Request and Upstream Keepalive module by Maxim Dounin. 
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 04 Aug 2011 18:45:59 +0100
+
+nginx (1.0.5-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added new versions of example configs. 
+  
+  * Updated nginx_ensite.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 19 Jul 2011 16:42:08 +0100
+
+nginx (1.0.4-perusio.1.1) unstable; urgency=low
+
+  * New patches added for OpenSSL anon cypher suites and FastCGI duplicate
+    request.
+  
+  * Updated drupal example configuration.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 21 Jun 2011 19:00:16 +0100
+
+nginx (1.0.4-perusio.1.0) unstable; urgency=low
+
+  * New version of nginx_ensite.
+  
+  * New versions of the example configurations.
+  
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 07 Jun 2011 22:05:14 +0100
+
+nginx (1.0.2-perusio.1.1) unstable; urgency=low
+
+  * Updated the Maxim Dounin patches.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 13 May 2011 04:28:14 +0100
+
+nginx (1.0.2-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * The proxy cache bypass testing patch is now commited.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 13 May 2011 01:16:38 +0100
+
+nginx (1.0.0-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Updated Piwik's config.
+  
+  * The cache hogging patch is now commited.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 12 Apr 2011 20:46:39 +0100
+
+nginx (0.9.7-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added patch by Igor Sysoev for handling satisfy any properly.
+  
+  * Updated the configs.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 12 Apr 2011 03:45:13 +0100
+
+nginx (0.9.6-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Updated all the example configs.
+  
+  * Updated the package extended description in the control file.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 22 Mar 2011 15:37:03 +0000
+
+nginx (0.9.5-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added patches provided by Maxim Dounin in the nginx-devel mailing
+    list.
+  
+  * Added config for wordpress.
+  
+  * Also added patch for IPv6 correct IP addresses parsing of the $host
+    variable.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 01 Mar 2011 03:48:29 +0000
+
+nginx (0.9.4-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added config for Chive.
+  
+  * Updated configs for Drupal and Piwik.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 24 Jan 2011 01:50:06 +0000
+
+nginx (0.9.3-perusio.1.0) unstable; urgency=low
+
+  * New upstream release. Removed the dbg package.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 13 Dec 2010 14:35:58 +0000
+
+nginx (0.9.2-perusio.1.0) unstable; urgency=low
+
+  * New upstream release. Merged some stuff from the new debian
+    package. Added my configuration for drupal and nginx. Added also an
+    init script for PHP CGI. Improved the README. dirs changed to
+    nginx.dirs as in the Debian package.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 06 Dec 2010 14:48:55 +0000
+
+nginx (0.9.1-perusio.1.1) unstable; urgency=low
+
+  * Patched for accept4() syscall run time workaround in older kernels.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 02 Dec 2010 22:54:21 +0000
+
+nginx (0.9.1-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 01 Dec 2010 00:41:30 +0000
+
+nginx (0.8.53-perusio.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 18 Oct 2010 15:36:51 +0100
+
+nginx (0.8.52-perusio1.1) unstable; urgency=low
+
+  * Added rules for building with asynchronous I/O.  
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 05 Oct 2010 00:08:45 +0100
+
+nginx (0.8.52-perusio1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added examples directory with monit script.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 02 Oct 2010 16:11:12 +0100
+
+nginx (0.8.50-perusio1.0) unstable; urgency=low
+
+  * Added the inclusion of the http secure link module in the build.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 06 Sep 2010 19:13:54 +0100
+
+nginx (0.8.50-perusio1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 02 Sep 2010 16:26:26 +0100
+
+nginx (0.8.49-perusio1.0) unstable; urgency=low
+
+  * New upstream release.
+  
+  * Added nginx_ensite, nginx_dissite for quick virtual host enabling and
+    disabling: both with man pages.
+  
+  * Added Bash completion script.
+  
+  * Removed IPv6 related patch. Upstream fixed it.
+
+ -- António P. P. Almeida <appa@perusio.net>  Wed, 01 Sep 2010 02:57:40 +0100
+
+nginx (0.7.67-4.perusio) unstable; urgency=low
+
+  * Removed all the mail related modules and also the server side
+    includes. Added the upload progress bar module.
+
+ -- António P. P. Almeida <appa@perusio.net>  Sat, 07 Aug 2010 03:34:30 +0100
+
+nginx (0.7.67-3) unstable; urgency=low
+
+  * debian/rules:
+    + Readded the configure option --with-mail_ssl_module, Thanks to Roland
+      Rosenfeld <roland@spinnaker.de> (Closes: #590815)
+  * debian/control:
+    + Updated Standards-Version to 3.9.1 (no changes needed)
+
+ -- Kartik Mistry <kartik@debian.org>  Thu, 29 Jul 2010 21:41:52 +0530
+
+nginx (0.7.67-2) unstable; urgency=low
+
+  * debian/conf/sites-available/default:
+    + Removed reference to SSLv2 protocol (Closes: #589139)
+  * debian/control:
+    + Updated Standards-Version to 3.9.0
+  * debian/copyright:
+    + Don't point to BSD license file, included exact upstream version of
+      license text
+    + Added missing copyright owner for contrib/ scripts
+    + debian/* license is same as upstream now as discussed with co-maintainers
+
+ -- Kartik Mistry <kartik@debian.org>  Mon, 19 Jul 2010 10:36:32 +0530
+
+nginx (0.7.67-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kartik Mistry <kartik@debian.org>  Wed, 16 Jun 2010 01:26:51 +0530
+
+nginx (0.7.65-7) unstable; urgency=low
+
+  [Kartik Mistry]
+  * debian/rules:
+    + Enabled HTTPSubModule module in configure (Closes: #584828)
+    + Arranged configure options in better manner
+
+ -- Kartik Mistry <kartik@debian.org>  Mon, 07 Jun 2010 14:33:24 +0530
+
+nginx (0.7.65-6) unstable; urgency=low
+
+  [Kartik Mistry]
+  * debian/README.Debian:
+    + Fixed typo and somewhat better wordings
+  * debian/conf/mime.types:
+    + Added entry to support 7zip files (Closes: #580423)
+  * debian/init.d:
+    + Do not print config testing info until an error found, Thanks to Ubuntu
+      bug 568293
+  * debian/copyright:
+    + Updated as per DEP-5 specification
+
+ -- Kartik Mistry <kartik@debian.org>  Sat, 22 May 2010 01:41:33 +0530
+
+nginx (0.7.65-5) unstable; urgency=low
+
+  [Kartik Mistry]
+  * debian/patches/fix_reloading_ipv6.diff:
+    + Added patch to fix reloading with IPv6 addresses, Thanks to
+      Matthias-Christian Ott <ott@mirix.org> for patch (Closes: #577456)
+
+ -- Kartik Mistry <kartik@debian.org>  Wed, 14 Apr 2010 11:36:48 +0530
+
+nginx (0.7.65-4) unstable; urgency=low
+
+  [Kartik Mistry]
+  * debian/conf/sites-available/default:
+    + Really listen for both IPv4 and IPv6 addresses. Thanks to Nikolaus
+      Schulz <microschulz@web.de> for notice (Closes: #574983)
+  * debian/control, debian/rules:
+    + Added GeoIP support, Thanks to Caetano Carezzato
+      <caetano@vision.ime.usp.br> (Closes: #575280)
+  * debian/conf/mime.types:
+    + Added svg entry to mime.types, Jeremy Lal <kapouer@melix.org>
+      (Closes: #575155)
+
+ -- Kartik Mistry <kartik@debian.org>  Thu, 25 Mar 2010 00:21:50 +0530
+
+nginx (0.7.65-3) unstable; urgency=medium
+
+  [Kartik Mistry]
+  * Urgency set to medium due to Release Goal
+  * debian/conf/sites-available/default:
+    + Listen for both IPv4 and IPv6 addresses by default (Closes: #574983)
+
+ -- Kartik Mistry <kartik@debian.org>  Tue, 23 Mar 2010 10:30:18 +0530
+
+nginx (0.7.65-2) unstable; urgency=low
+
+  * debian/README.Debian:
+    + Added explanation about not installing files in /var/www/
+      (Closes: #572513)
+  * debian/rules:
+    + Readded realip module support (Closes: #507419)
+
+ -- Kartik Mistry <kartik@debian.org>  Sat, 06 Mar 2010 13:14:48 +0530
+
+nginx (0.7.65-1) unstable; urgency=low
+
+  [Kartik Mistry]
+  * New upstream release
+  * debian/init.d:
+    + $local_fs $remote_fs $network $syslog is what we need in Required-Start
+    and Required-Stop (Closes: #568238)
+  * debian/copyright:
+    + Updated package copyright year
+    + Updated license text to make same as upstream license
+
+ -- Kartik Mistry <kartik@debian.org>  Fri, 05 Feb 2010 11:20:28 +0530
+
+nginx (0.7.64-3) unstable; urgency=low
+
+  [Kartik Mistry]
+  * debian/conf/sites-available/default:
+    + Added patch to fix default virtual host, Thanks to Thomas Venieris
+     <mot@freemail.gr> (Closes: #564726)
+  * debian/init.d:
+    + Added dependency on $remote_fs in Required-Start and Required-Stop
+      (Closes: #566862)
+  * Converted package to use 3.0 (quilt) source format
+  * Updated to Standards-Version 3.8.4
+
+ -- Kartik Mistry <kartik@debian.org>  Mon, 01 Feb 2010 23:44:21 +0530
+
+nginx (0.7.64-2) unstable; urgency=low
+
+  [Kartik Mistry]
+  * debian/rules:
+    + Used dh_prep instead of dh_clean -k
+  * debian/control:
+    + Added ${misc:Depends} in Depends
+  * Added patch for adding debug package, Thanks to Matthew Palmer
+    <mpalmer@debian.org> (Closes: #563339)
+  * debian/copyright:
+    + Added missing copyright owners for Debian package and fixed year and
+    licence doesn't point to versionless symlink
+
+  [Fabio Tranchitella]
+  * debian/init.d:
+    + Added patch from Wouter de Bie to add $DAEMON_OPTS in
+    test_nginx_config()
+
+ -- Kartik Mistry <kartik@debian.org>  Sat, 09 Jan 2010 11:15:59 +0530
+
+nginx (0.7.64-1) unstable; urgency=medium
+
+  [Kartik Mistry]
+  * Urgency set to medium due to security issue
+  * New upstream release (Closes: #557602)
+    + fixes SSL renegotiation vuln CVE-2009-3555 (Closes: #557873)
+  * debian/nginx.1:
+    + Corrected homepage entry (Closes: #556617)
+    + Minor whitespace and empty line cleanups, added SEE ALSO section. Used
+      .TP instead of .br, Added missing options, and this should
+      (Closes: #556616)
+  * debian/copyright:
+    + Used © instead of deprecated (C) symbol
+    + Formatted some texts
+  * debian/control:
+    + Added myself as uploader
+    + Wrapped and rearranged Build-Depends for better readability
+  * debian/patches/dlopen.dpatch:
+    + Fixed patch name in comment
+    + Added missing DP comment from changelog
+  * debian/rules:
+    + Minor fixes related to formatting of file and whitespaces
+  * debian/watch:
+    + Removed comments out of it
+
+ -- Kartik Mistry <kartik@debian.org>  Fri, 27 Nov 2009 11:10:18 +0530
+
+nginx (0.7.63-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sun, 08 Nov 2009 09:53:46 +0100
+
+nginx (0.7.62-4) unstable; urgency=low
+
+  * debian/conf/nginx.conf: commented out the mail proxy example.
+    (Closes: #551682)
+  * debian/init.d: do not redirect the output of nginx -t.
+    (Closes: #551683)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 22 Oct 2009 19:50:05 +0200
+
+nginx (0.7.62-3) unstable; urgency=low
+
+  * debian/rules: fix the FTBFS on sparc.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 16 Oct 2009 06:39:22 +0000
+
+nginx (0.7.62-2) unstable; urgency=low
+
+  * debian/rules: added --with-mail and --with-mail_ssl_module.
+  * debian/patches/nginx-upstream-fair.dpatch: added support for the
+    nginx-upstream-fair module. (Closes: #521447)
+  * debian/patches/dlopen.dpatch: applied patch to remove the unnecesssary link
+    to libdl. (Closes: #540599)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 15 Oct 2009 18:32:00 +0000
+
+nginx (0.7.62-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/rules: added --with-ipv6. (Closes: #547249)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sun, 27 Sep 2009 22:25:16 +0200
+
+nginx (0.7.61-2) unstable; urgency=low
+
+  * debian/control: bumped Standards-Version to 3.8.3, no changes needed.
+  * debian/init.d: added status action. (Closes: #541228)
+  * debian/rules:
+    - added -with-http_gzip_static_module. (Closes: #541229)
+    - use the switch --with-cc-opt="-m32 -mcpu=ultrasparc" on sparc.
+      (Closes: #543571)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sat, 29 Aug 2009 17:03:44 +0200
+
+nginx (0.7.61-1) unstable; urgency=low
+
+  * New upstream version:
+    *) Bugfix: nginx could not be built --without-http-cache; the bug had 
+       appeared in 0.7.60.
+    *) Bugfix: a segmentation fault occurred in worker process, if a 
+       backend 401 error was intercepted and the backend did not set the 
+       "WWW-Authenticate" response header line.
+       Thanks to Eugene Mychlo.
+    *) Feature: the "keepalive_requests" directive.
+    *) Bugfix: in open_file_cache and proxy/fastcgi cache interaction on 
+       start up.
+    *) Bugfix: open_file_cache might cache open file descriptors too long.
+    *) Bugfix: XLST filter did not work in subrequests.
+  * Fix "gzip_disable in default conf for old IE", adding ignore rules for
+    certain MSIE versions in the default configuration (Closes: #540025)
+  * Fix "init.d: Config test before allowing a restart" adding a function
+    and calling it before reloading, restarting and starting (Closes: #539778)
+  * Drops path for pidof call in postinst script.
+
+ -- Jose Parrella <bureado@debian.org>  Wed, 05 Aug 2009 14:00:11 -0500
+
+nginx (0.7.59-1) unstable; urgency=low
+
+  * New upstream release, first in Debian for the 0.7 branch. Among other
+    issues, it also fixes the problem with wildcard dns names used with SSL.
+    (Closes: #515904)
+  * debian/watch: updated.
+  * debian/postinst: fixed a bashism. (Closes: #507913)
+  * debian/conf/nginx.conf: removed default_type. (Closes: #509390)
+  * debian/control: updated Standards-Version to 3.8.1, no changes needed.
+  * debian/NEWS.Debian: documented the issues with
+    server_names_hash_bucket_size. (Closes: #524785)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sun, 31 May 2009 18:38:56 +0200
+
+nginx (0.7.14-1) experimental; urgency=low
+
+  * New upstream release.
+  * Adding configtest to the init.d script (Closes: #496279)
+  * postinst now calls the builtin kill, so tweaks on the specific signal
+    calls were needed.
+  * Default HTML files are no longer installed.
+  * The default configuration file no longer requires a 50x file under
+    /var/www.
+
+ -- Jose Parrella <bureado@debian.org>  Tue, 02 Sep 2008 20:48:58 -0430
+
+nginx (0.6.34-2) unstable; urgency=low
+
+  * Added support for realip module. (Closes: #507419)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sat, 06 Dec 2008 10:34:01 +0100
+
+nginx (0.6.34-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/rules: removed the --with-debug configure switch. (Closes: #500891)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sun, 30 Nov 2008 11:37:13 +0100
+
+nginx (0.6.32-3) unstable; urgency=low
+
+  * debian/control: build again on all the architectures, but use the switch
+    --with-cc-opt="-m32 -mcpu=ultrasparc" on sparch. (Closes: #479185)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 25 Sep 2008 17:14:27 +0200
+
+nginx (0.6.32-2) unstable; urgency=low
+
+  * debian/control: disabled support for sparc. (Closes: #479185)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sat, 20 Sep 2008 11:48:48 +0200
+
+nginx (0.6.32-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 18 Jul 2008 09:15:58 +0200
+
+nginx (0.6.31-2) unstable; urgency=low
+
+  * debian/control: removed httpd-cgi, nginx doesn't support executing
+    external programs. (Closes: #482332)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 22 May 2008 08:18:52 +0200
+
+nginx (0.6.31-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 12 May 2008 22:34:55 +0200
+
+nginx (0.6.30-2) unstable; urgency=low
+
+  * Upload into unstable.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 12 May 2008 14:24:53 +0200
+
+nginx (0.6.30-1) experimental; urgency=low
+
+  * New upstream release.
+  * Sync with the unstable packages.
+  * debian/conf/nginx.conf: add support for a conf.d directory.
+    (Closes: #476952)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 02 May 2008 09:32:46 +0200
+
+nginx (0.5.35-3) unstable; urgency=low
+
+  * debian/conf/sites-available/default: adding support for /doc and /images
+    namespaces (Closes: #474519)
+
+ -- Jose Parrella <bureado@debian.org>  Mon, 07 Apr 2008 13:22:32 -0430
+
+nginx (0.5.35-2) unstable; urgency=low
+
+  * debian/init.d: do not break if start-stop-daemon exits with an error.
+    (Closes: #464453)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sun, 10 Feb 2008 17:57:57 +0100
+
+nginx (0.5.35-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed, 09 Jan 2008 07:58:56 +0100
+
+nginx (0.5.34-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: added Homepage, Vcs-Svn, Vcs-Browser fields; updated
+    Standard-Versions to 3.7.3.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 24 Dec 2007 12:26:27 +0100
+
+nginx (0.5.33-1) unstable; urgency=low
+
+  * New stable upstream release (Closes: #451173)
+  * nginx now provides httpd, httpd-cgi virtual packages
+    (Closes: #439468, #452025)
+  * sites-enabled/default link is now provided only on fresh 
+    installations (Closes: #432961)
+  * Updated code for online upgrading of nginx (Closes: #445246)
+  * Reviewed maintainer scripts for correct behaviour on updates
+    (Closes: #452787, #435965)
+  * Removed debian/nginx.links and debian/preinst.
+  * Changing Maintainer address to bureado@debian.org.
+  * Welcoming Fabio Tranchitella <kobold@debian.org> as an nginx 
+    uploader for Debian. Thanks for your patches.
+
+ -- Jose Parrella <bureado@debian.org>  Sat, 08 Dec 2007 11:27:54 -0400
+
+nginx (0.5.30-1) unstable; urgency=low
+
+  * New stable upstream release.
+  * Adding mime.types (and other upstream conffiles) to the package 
+    since it was lost on 0.5.26 (Closes: #435964)
+
+ -- Jose Parrella <joseparrella@cantv.net>  Sat, 04 Aug 2007 10:39:40 -0400
+
+nginx (0.5.26-1) unstable; urgency=low
+
+  * New stable upstream release.
+  * Updating init.d usage message.
+  * Installing logrotate script (Closes: #397978)
+
+ -- Jose Parrella <joseparrella@cantv.net>  Sun, 17 Jun 2007 20:43:35 +0100
+
+nginx (0.5.18-1) unstable; urgency=low
+
+  * New upstream version (Closes: #420063)
+  * Adding DAV support (Closes: #415678)
+  * Adding support for sites-[available|enabled]/ (Closes: #419912)
+
+ -- Jose Parrella <joseparrella@cantv.net>  Thu, 19 Apr 2007 21:50:37 -0400
+
+nginx (0.5.13-1) unstable; urgency=low
+
+  * Adding FLV support. (Closes: #411105)
+  * Adding SSL support.
+
+ -- Jose Parrella <joseparrella@cantv.net>  Mon, 19 Feb 2007 10:30:07 -0400
+
+nginx (0.5.12-2) unstable; urgency=low
+
+  * Patching src/core/ngx_shmtx.h in order to solve FTBFS problems in 
+    non-x86 archs (Thanks to Igor Sysoev) (Closes: #410884)
+
+ -- Jose Parrella <joseparrella@cantv.net>  Wed, 14 Feb 2007 13:32:01 -0400
+
+nginx (0.5.12-1) unstable; urgency=low
+
+  * New upstream version fixes FTBFS problems in non-x86 archs
+    (Closes: #409878)
+
+ -- Jose Parrella <joseparrella@cantv.net>  Mon, 12 Feb 2007 19:37:07 -0400
+
+nginx (0.5.11-1) unstable; urgency=low
+
+  * New upstream version. (Closes: #405983)
+
+ -- Jose Parrella <joseparrella@cantv.net>  Sun, 5 Feb 2007 19:35:56 -0400
+
+nginx (0.4.13-2) unstable; urgency=low
+
+  * Fixed default installation paths for www/ files, avoiding the
+    default installation of index.html in /var/www (Closes: #400103)
+  * Alexey Besciokov <proforg@maloletka.ru> provided new postinst and prerm
+    scripts with the ability to reload the master binary (Closes: #398009)
+
+ -- Jose Parrella <joseparrella@cantv.net>  Fri, 24 Nov 2006 07:12:46 -0400
+
+nginx (0.4.13-1) unstable; urgency=low
+
+  * New upstream version
+  * Fixed default configuration file which made nginx to fail at
+    installation and purge.
+
+ -- Jose Parrella <joseparrella@cantv.net>  Thu, 16 Nov 2006 22:44:33 -0400
+
+nginx (0.4.12-1) unstable; urgency=low
+
+  * New upstream version (Closes: #397969)
+  * nginx will now compile with debugging and status support
+    (Closes: #397967)
+  * Added configuration reload support in the init.d script
+    (Closes: #397980)
+  * Added logrotate script (Closes: #397978)
+  * Added debian/upstream.pl as a brief helper for new
+    upstream version packaging.
+  * Thanks to Alexey Besciokov <proforg@maloletka.ru> for
+    suggestions, bug reports and patches.
+
+ -- Jose Parrella <joseparrella@cantv.net>  Sun, 12 Nov 2006 18:31:24 -0400
+
+nginx (0.4.2-1) unstable; urgency=low
+
+  * Initial release (Closes: #386151)
+  * Tweaked the configuration file and the path handling for Debian.
+
+ -- Jose Parrella <joseparrella@cantv.net>  Thu, 14 Sep 2006 11:40:20 -0400
+
