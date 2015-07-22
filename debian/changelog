@@ -1,8 +1,14 @@
+nginx (1.9.3-perusio.1.0) unstable; urgency=medium
+
+  * New upstream.
+
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 23 Jul 2015 01:24:31 +0200
+
 nginx (1.9.2-perusio.1.1) unstable; urgency=medium
 
   * Added proper init script.
 
- -- António P. P. Almeida <appa@perusio.net>  Tue, 30 Jun 2015 00:02:27 +0200
+ -- António P. P. Almeida <appa@perusio.net>  Thu, 23 Jul 2015 01:18:32 +0200
 
 nginx (1.9.2-perusio.1.0) unstable; urgency=medium
 
