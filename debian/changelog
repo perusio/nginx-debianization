@@ -1,3 +1,13 @@
+nginx (1.9.4-perusio.1.0) unstable; urgency=medium
+
+  * New upstream.
+  * systemd service added.
+  * New nginx configuration.
+  * Fixes to nginx_ensite.
+  * New man page.
+
+ -- António P. P. Almeida <appa@perusio.net>  Mon, 31 Aug 2015 18:20:16 +0200
+
 nginx (1.9.3-perusio.1.0) unstable; urgency=medium
 
   * New upstream.
