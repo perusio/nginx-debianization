@@ -59,7 +59,8 @@ configure_flags := \
 override_dh_auto_configure: config.arch
 override_dh_installinit:
 	dh_installinit --no-restart-on-upgrade --no-start --name=nginx
-
+override_dh_systemd_enable:
+	dh_systemd_enable --name=nginx
 config.arch:
 	dh_testdir
 	./configure $(configure_flags)
