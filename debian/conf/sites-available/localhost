@@ -3,9 +3,14 @@
 ### Extremely simple Nginx configuration. A very modest showcase of
 ### Nginx capabilities and directives.
 server {
-    listen 80 default; ## listen for IPv4
-    listen [::]:80 default ipv6only=on; ## listen for IPv6
+    servername localhost;
+    listen 127.0.0.1:80; ## listen for IPv4
+    listen [::1]:80 default; ## listen for IPv6
+
     server_name localhost;
+
+    error_log /var/log/nginx/localhost.error.log;
+    access_log /var/log/nginx/localhost.access.log;
 
     access_log /var/log/nginx/localhost.access.log;
 
@@ -36,38 +41,34 @@ server {
     location = /50x.html {
         root /var/www/nginx-default;
     }
-    } # server
 
-    ## Another virtual host using mix of IP-, name-, and port-based configuration.
-    server {
-        listen 127.0.0.1:8000;
-        listen somename:8080;
-        server_name somename alias another.alias;
+    location /doc {
+        root /usr/share;
+        autoindex on;
 
-        location / {
-            root html;
-            index index.html index.htm;
+        if ($not_allowed) {
+            return 403;
         }
+    }
 
-} # server
+    location /images {
+        root /usr/share;
+        autoindex on;
+    }
+
+} # HTTP server
 
 ## HTTPS server example.
 server {
-    listen 443 ssl default_server; # required for session resumption
+    listen 127.0.0.1:443 ssl spdy; # required for session resumption
+    listen [::1]:443 ssl spdy;
     server_name localhost;
 
-    ssl_certificate cert.pem;
-    ssl_certificate_key  cert.key;
+    error_log /var/log/nginx/localhost.error.log;
+    access_log /var/log/nginx/localhost.access.log;
 
-    ssl_session_timeout 10m;
-
-    ## Tweak the SSL settings to your liking.
-    ssl_protocols TLSv1;
-    ## Stolen from: https://calomel.org/nginx.html.
-    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:AES256-GCM-SHA384:AES256-SHA256:AES256-SHA:AES
-    ssl_prefer_server_ciphers on;
-    ## Use Elliptic Curve Diffie-Hellman key agreement with 521 bits.
-    ssl_ecdh_curve secp521r1;
+    ssl_certificate localhost_cert.pem;
+    ssl_certificate_key localhost_key.pem;
 
     location / {
         root html;
