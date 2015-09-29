@@ -1,3 +1,9 @@
+nginx (1.9.5-perusio.1.0) unstable; urgency=medium
+
+  * New upstream with HTTP/2 enabled.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 29 Sep 2015 15:48:21 +0200
+
 nginx (1.9.4-perusio.1.0) unstable; urgency=medium
 
   * New upstream.
