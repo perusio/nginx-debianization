@@ -1,3 +1,10 @@
+nginx (1.9.5-perusio.1.1) unstable; urgency=medium
+
+  * Lua module update.
+  * Using OpenSSL 1.0.2d for ALPN support.  
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 20 Oct 2015 18:27:30 +0200
+
 nginx (1.9.5-perusio.1.0) unstable; urgency=medium
 
   * New upstream with HTTP/2 enabled.
