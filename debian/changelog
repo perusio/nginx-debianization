@@ -1,3 +1,9 @@
+nginx (1.9.6-perusio.1.0) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 27 Oct 2015 15:35:46 +0100
+
 nginx (1.9.5-perusio.1.1) unstable; urgency=medium
 
   * Lua module update.
