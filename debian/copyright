@@ -1,11 +1,11 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-Name: nginx
-Maintainer: Jose Parrella <joseparrella@cantv.net>
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: nginx
+Upstream-Contact: Antonio P. P. Almeida <appa@perusio.net>
 Source: http://nginx.net/
-Upstream Author: Igor Sysoev <igor@sysoev.ru>
+Upstream-Author: Igor Sysqoev <igor@sysoev.ru>
 
 Files: *
-Copyright: © 2002-2010, Igor Sysoev <igor@sysoev.ru>
+Copyright: 2002-2015 Igor Sysoev <igor@sysoev.ru>, 2011-2015 Nginx Inc.
 License: BSD
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -28,13 +28,16 @@ License: BSD
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Files: contrib/geo2nginx.pl
-Copyright: © 2005, Andrei Nigmatulin
-
-Files: modules/nginx-upstream-fair/ngx_http_upstream_fair_module.c
-Copyright: © 2007, Igor Sysoev, Grzegorz Nosek
+Copyright: 2005 Andrei Nigmatulin
+License: BSD
 
 Files: debian/*
-Copyright: © 2006-2010, Jose Parrella <joseparrella@cantv.net>,
-                        Fabio Tranchitella <kobold@debian.org>
-           © 2009-2010, Kartik Mistry <kartik@debian.org>
-License: Same as upstream license.
+Copyright: 2010-2015 Antonio P. P. Almeida <appa@perusio.net>
+License: BSD
+
+License: BSD
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the BSD license.
+ .
+ On Debian systems, the complete text of the BSD license in
+ '/usr/share/common-licenses/BSD'.

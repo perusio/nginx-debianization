@@ -1,8 +1,8 @@
 Source: nginx
+Maintainer: António P. P. Almeida <appa@perusio.net>
+Uploaders: António P. P. Almeida <appa@perusio.net>
 Section: httpd
 Priority: optional
-Maintainer: António P. P. Almeida <appa@perusio.net> 
-Uploaders: António P. P. Almeida <appa@perusio.net>
 Build-Depends: debhelper (>= 7),
                autotools-dev,
                libgeoip-dev,
@@ -10,13 +10,16 @@ Build-Depends: debhelper (>= 7),
                libpcre3-dev,
                zlib1g-dev
 Standards-Version: 3.9.6
-Homepage: http://nginx.org
-Vcs-Hg: hg://hg.nginx.org/nginx
 Vcs-Browser: http://trac.nginx.org/nginx/browser
+Vcs-Hg: hg://hg.nginx.org/nginx
+Homepage: http://nginx.org
 
 Package: nginx
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, lsb-base (>= 3.2-14)
+Multi-Arch: same
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Pre-Depends: multiarch-support
 Provides: httpd
 Description: small, but very powerful and efficient web server and mail proxy
  Nginx (engine x) is a web server created by Igor Sysoev and kindly provided to
@@ -32,4 +35,3 @@ Description: small, but very powerful and efficient web server and mail proxy
  .
  It includes config examples for several web applications, namely
  Drupal, WordPress, Chive, Piwik, Redmine and SquirrelMail.
-
