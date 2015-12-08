@@ -47,6 +47,7 @@ configure_flags := \
 	    --with-http_auth_request_module \
             --with-stream \
             --with-stream_ssl_module \
+            --with-http_slice_module \
 	    --add-module=$(MODULESDIR)/nginx-upload-progress-module \
 	    --add-module=$(MODULESDIR)/lua-nginx-module \
 	    --add-module=$(MODULESDIR)/ngx_http_delay_module \
