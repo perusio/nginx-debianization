@@ -1,3 +1,12 @@
+nginx (1.9.8-perusio.1.0) unstable; urgency=medium
+
+  * New upstream version.
+
+  * Slice module added to the build for splitting big responses when
+    caching.
+
+ -- António P. P. Almeida <appa@perusio.net>  Tue, 08 Dec 2015 17:24:10 +0100
+
 nginx (1.9.7-perusio.1.0) unstable; urgency=medium
 
   * New uptream version.
