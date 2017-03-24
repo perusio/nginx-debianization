@@ -19,10 +19,10 @@ static ngx_int_t ngx_http_script_add_var_code(ngx_http_script_compile_t *sc,
 static ngx_int_t ngx_http_script_add_args_code(ngx_http_script_compile_t *sc);
 #if (NGX_PCRE)
 static ngx_int_t ngx_http_script_add_capture_code(ngx_http_script_compile_t *sc,
-     ngx_uint_t n);
+    ngx_uint_t n);
 #endif
 static ngx_int_t
-     ngx_http_script_add_full_name_code(ngx_http_script_compile_t *sc);
+    ngx_http_script_add_full_name_code(ngx_http_script_compile_t *sc);
 static size_t ngx_http_script_full_name_len_code(ngx_http_script_engine_t *e);
 static void ngx_http_script_full_name_code(ngx_http_script_engine_t *e);
 
@@ -350,19 +350,17 @@ ngx_http_script_compile(ngx_http_script_compile_t *sc)
                 goto invalid_variable;
             }
 
-#if (NGX_PCRE)
-            {
-            ngx_uint_t  n;
-
             if (sc->source->data[i] >= '1' && sc->source->data[i] <= '9') {
+#if (NGX_PCRE)
+                ngx_uint_t  n;
 
                 n = sc->source->data[i] - '0';
 
-                if (sc->captures_mask & (1 << n)) {
+                if (sc->captures_mask & ((ngx_uint_t) 1 << n)) {
                     sc->dup_capture = 1;
                 }
 
-                sc->captures_mask |= 1 << n;
+                sc->captures_mask |= (ngx_uint_t) 1 << n;
 
                 if (ngx_http_script_add_capture_code(sc, n) != NGX_OK) {
                     return NGX_ERROR;
@@ -371,9 +369,13 @@ ngx_http_script_compile(ngx_http_script_compile_t *sc)
                 i++;
 
                 continue;
-            }
-            }
+#else
+                ngx_conf_log_error(NGX_LOG_EMERG, sc->cf, 0,
+                                   "using variable \"$%c\" requires "
+                                   "PCRE library", sc->source->data[i]);
+                return NGX_ERROR;
 #endif
+            }
 
             if (sc->source->data[i] == '{') {
                 bracket = 1;
@@ -1488,7 +1490,7 @@ ngx_http_script_file_code(ngx_http_script_engine_t *e)
     r = e->request;
 
     ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
-                   "http script file op %p \"%V\"", code->op, &path);
+                   "http script file op %p \"%V\"", (void *) code->op, &path);
 
     clcf = ngx_http_get_module_loc_conf(r, ngx_http_core_module);
 

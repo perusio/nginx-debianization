@@ -53,10 +53,15 @@ struct ngx_cycle_s {
     ngx_uint_t                modules_used;    /* unsigned  modules_used:1; */
 
     ngx_queue_t               reusable_connections_queue;
+    ngx_uint_t                reusable_connections_n;
 
     ngx_array_t               listening;
     ngx_array_t               paths;
+
     ngx_array_t               config_dump;
+    ngx_rbtree_t              config_dump_rbtree;
+    ngx_rbtree_node_t         config_dump_sentinel;
+
     ngx_list_t                open_files;
     ngx_list_t                shared_memory;
 
@@ -79,35 +84,36 @@ struct ngx_cycle_s {
 
 
 typedef struct {
-     ngx_flag_t               daemon;
-     ngx_flag_t               master;
+    ngx_flag_t                daemon;
+    ngx_flag_t                master;
 
-     ngx_msec_t               timer_resolution;
+    ngx_msec_t                timer_resolution;
+    ngx_msec_t                shutdown_timeout;
 
-     ngx_int_t                worker_processes;
-     ngx_int_t                debug_points;
+    ngx_int_t                 worker_processes;
+    ngx_int_t                 debug_points;
 
-     ngx_int_t                rlimit_nofile;
-     off_t                    rlimit_core;
+    ngx_int_t                 rlimit_nofile;
+    off_t                     rlimit_core;
 
-     int                      priority;
+    int                       priority;
 
-     ngx_uint_t               cpu_affinity_auto;
-     ngx_uint_t               cpu_affinity_n;
-     ngx_cpuset_t            *cpu_affinity;
+    ngx_uint_t                cpu_affinity_auto;
+    ngx_uint_t                cpu_affinity_n;
+    ngx_cpuset_t             *cpu_affinity;
 
-     char                    *username;
-     ngx_uid_t                user;
-     ngx_gid_t                group;
+    char                     *username;
+    ngx_uid_t                 user;
+    ngx_gid_t                 group;
 
-     ngx_str_t                working_directory;
-     ngx_str_t                lock_file;
+    ngx_str_t                 working_directory;
+    ngx_str_t                 lock_file;
 
-     ngx_str_t                pid;
-     ngx_str_t                oldpid;
+    ngx_str_t                 pid;
+    ngx_str_t                 oldpid;
 
-     ngx_array_t              env;
-     char                   **environment;
+    ngx_array_t               env;
+    char                    **environment;
 } ngx_core_conf_t;
 
 
@@ -124,6 +130,7 @@ ngx_pid_t ngx_exec_new_binary(ngx_cycle_t *cycle, char *const *argv);
 ngx_cpuset_t *ngx_get_cpu_affinity(ngx_uint_t n);
 ngx_shm_zone_t *ngx_shared_memory_add(ngx_conf_t *cf, ngx_str_t *name,
     size_t size, void *tag);
+void ngx_set_shutdown_timer(ngx_cycle_t *cycle);
 
 
 extern volatile ngx_cycle_t  *ngx_cycle;

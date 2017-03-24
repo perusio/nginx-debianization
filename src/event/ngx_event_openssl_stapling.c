@@ -31,6 +31,8 @@ typedef struct {
     X509                        *cert;
     X509                        *issuer;
 
+    u_char                      *name;
+
     time_t                       valid;
     time_t                       refresh;
 
@@ -45,6 +47,8 @@ struct ngx_ssl_ocsp_ctx_s {
     X509                        *cert;
     X509                        *issuer;
 
+    u_char                      *name;
+
     ngx_uint_t                   naddrs;
 
     ngx_addr_t                  *addrs;
@@ -57,14 +61,14 @@ struct ngx_ssl_ocsp_ctx_s {
 
     ngx_msec_t                   timeout;
 
-    void                       (*handler)(ngx_ssl_ocsp_ctx_t *r);
+    void                       (*handler)(ngx_ssl_ocsp_ctx_t *ctx);
     void                        *data;
 
     ngx_buf_t                   *request;
     ngx_buf_t                   *response;
     ngx_peer_connection_t        peer;
 
-    ngx_int_t                  (*process)(ngx_ssl_ocsp_ctx_t *r);
+    ngx_int_t                  (*process)(ngx_ssl_ocsp_ctx_t *ctx);
 
     ngx_uint_t                   state;
 
@@ -83,11 +87,14 @@ struct ngx_ssl_ocsp_ctx_s {
 };
 
 
+static ngx_int_t ngx_ssl_stapling_certificate(ngx_conf_t *cf, ngx_ssl_t *ssl,
+    X509 *cert, ngx_str_t *file, ngx_str_t *responder, ngx_uint_t verify);
 static ngx_int_t ngx_ssl_stapling_file(ngx_conf_t *cf, ngx_ssl_t *ssl,
-    ngx_str_t *file);
-static ngx_int_t ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl);
+    ngx_ssl_stapling_t *staple, ngx_str_t *file);
+static ngx_int_t ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl,
+    ngx_ssl_stapling_t *staple);
 static ngx_int_t ngx_ssl_stapling_responder(ngx_conf_t *cf, ngx_ssl_t *ssl,
-    ngx_str_t *responder);
+    ngx_ssl_stapling_t *staple, ngx_str_t *responder);
 
 static int ngx_ssl_certificate_status_callback(ngx_ssl_conn_t *ssl_conn,
     void *data);
@@ -121,9 +128,32 @@ ngx_int_t
 ngx_ssl_stapling(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *file,
     ngx_str_t *responder, ngx_uint_t verify)
 {
-    ngx_int_t                  rc;
-    ngx_pool_cleanup_t        *cln;
-    ngx_ssl_stapling_t        *staple;
+    X509  *cert;
+
+    for (cert = SSL_CTX_get_ex_data(ssl->ctx, ngx_ssl_certificate_index);
+         cert;
+         cert = X509_get_ex_data(cert, ngx_ssl_next_certificate_index))
+    {
+        if (ngx_ssl_stapling_certificate(cf, ssl, cert, file, responder, verify)
+            != NGX_OK)
+        {
+            return NGX_ERROR;
+        }
+    }
+
+    SSL_CTX_set_tlsext_status_cb(ssl->ctx, ngx_ssl_certificate_status_callback);
+
+    return NGX_OK;
+}
+
+
+static ngx_int_t
+ngx_ssl_stapling_certificate(ngx_conf_t *cf, ngx_ssl_t *ssl, X509 *cert,
+    ngx_str_t *file, ngx_str_t *responder, ngx_uint_t verify)
+{
+    ngx_int_t            rc;
+    ngx_pool_cleanup_t  *cln;
+    ngx_ssl_stapling_t  *staple;
 
     staple = ngx_pcalloc(cf->pool, sizeof(ngx_ssl_stapling_t));
     if (staple == NULL) {
@@ -138,29 +168,29 @@ ngx_ssl_stapling(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *file,
     cln->handler = ngx_ssl_stapling_cleanup;
     cln->data = staple;
 
-    if (SSL_CTX_set_ex_data(ssl->ctx, ngx_ssl_stapling_index, staple)
-        == 0)
-    {
-        ngx_ssl_error(NGX_LOG_EMERG, ssl->log, 0,
-                      "SSL_CTX_set_ex_data() failed");
+    if (X509_set_ex_data(cert, ngx_ssl_stapling_index, staple) == 0) {
+        ngx_ssl_error(NGX_LOG_EMERG, ssl->log, 0, "X509_set_ex_data() failed");
         return NGX_ERROR;
     }
 
     staple->ssl_ctx = ssl->ctx;
     staple->timeout = 60000;
     staple->verify = verify;
+    staple->cert = cert;
+    staple->name = X509_get_ex_data(staple->cert,
+                                    ngx_ssl_certificate_name_index);
 
     if (file->len) {
         /* use OCSP response from the file */
 
-        if (ngx_ssl_stapling_file(cf, ssl, file) != NGX_OK) {
+        if (ngx_ssl_stapling_file(cf, ssl, staple, file) != NGX_OK) {
             return NGX_ERROR;
         }
 
-        goto done;
+        return NGX_OK;
     }
 
-    rc = ngx_ssl_stapling_issuer(cf, ssl);
+    rc = ngx_ssl_stapling_issuer(cf, ssl, staple);
 
     if (rc == NGX_DECLINED) {
         return NGX_OK;
@@ -170,7 +200,7 @@ ngx_ssl_stapling(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *file,
         return NGX_ERROR;
     }
 
-    rc = ngx_ssl_stapling_responder(cf, ssl, responder);
+    rc = ngx_ssl_stapling_responder(cf, ssl, staple, responder);
 
     if (rc == NGX_DECLINED) {
         return NGX_OK;
@@ -179,26 +209,19 @@ ngx_ssl_stapling(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *file,
     if (rc != NGX_OK) {
         return NGX_ERROR;
     }
-
-done:
-
-    SSL_CTX_set_tlsext_status_cb(ssl->ctx, ngx_ssl_certificate_status_callback);
-    SSL_CTX_set_tlsext_status_arg(ssl->ctx, staple);
 
     return NGX_OK;
 }
 
 
 static ngx_int_t
-ngx_ssl_stapling_file(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *file)
+ngx_ssl_stapling_file(ngx_conf_t *cf, ngx_ssl_t *ssl,
+    ngx_ssl_stapling_t *staple, ngx_str_t *file)
 {
-    BIO                 *bio;
-    int                  len;
-    u_char              *p, *buf;
-    OCSP_RESPONSE       *response;
-    ngx_ssl_stapling_t  *staple;
-
-    staple = SSL_CTX_get_ex_data(ssl->ctx, ngx_ssl_stapling_index);
+    BIO            *bio;
+    int             len;
+    u_char         *p, *buf;
+    OCSP_RESPONSE  *response;
 
     if (ngx_conf_full_name(cf->cycle, file, 1) != NGX_OK) {
         return NGX_ERROR;
@@ -259,19 +282,24 @@ failed:
 
 
 static ngx_int_t
-ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl)
+ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl,
+    ngx_ssl_stapling_t *staple)
 {
-    int                  i, n, rc;
-    X509                *cert, *issuer;
-    X509_STORE          *store;
-    X509_STORE_CTX      *store_ctx;
-    STACK_OF(X509)      *chain;
-    ngx_ssl_stapling_t  *staple;
+    int              i, n, rc;
+    X509            *cert, *issuer;
+    X509_STORE      *store;
+    X509_STORE_CTX  *store_ctx;
+    STACK_OF(X509)  *chain;
 
-    staple = SSL_CTX_get_ex_data(ssl->ctx, ngx_ssl_stapling_index);
-    cert = SSL_CTX_get_ex_data(ssl->ctx, ngx_ssl_certificate_index);
+    cert = staple->cert;
 
-#if OPENSSL_VERSION_NUMBER >= 0x10001000L
+#ifdef SSL_CTRL_SELECT_CURRENT_CERT
+    /* OpenSSL 1.0.2+ */
+    SSL_CTX_select_current_cert(ssl->ctx, cert);
+#endif
+
+#ifdef SSL_CTRL_GET_EXTRA_CHAIN_CERTS
+    /* OpenSSL 1.0.1+ */
     SSL_CTX_get_extra_chain_certs(ssl->ctx, &chain);
 #else
     chain = ssl->ctx->extra_certs;
@@ -285,12 +313,15 @@ ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl)
     for (i = 0; i < n; i++) {
         issuer = sk_X509_value(chain, i);
         if (X509_check_issued(issuer, cert) == X509_V_OK) {
+#if OPENSSL_VERSION_NUMBER >= 0x10100001L
+            X509_up_ref(issuer);
+#else
             CRYPTO_add(&issuer->references, 1, CRYPTO_LOCK_X509);
+#endif
 
             ngx_log_debug1(NGX_LOG_DEBUG_EVENT, ssl->log, 0,
                            "SSL get issuer: found %p in extra certs", issuer);
 
-            staple->cert = cert;
             staple->issuer = issuer;
 
             return NGX_OK;
@@ -329,7 +360,9 @@ ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl)
 
     if (rc == 0) {
         ngx_log_error(NGX_LOG_WARN, ssl->log, 0,
-                      "\"ssl_stapling\" ignored, issuer certificate not found");
+                      "\"ssl_stapling\" ignored, "
+                      "issuer certificate not found for certificate \"%s\"",
+                      staple->name);
         X509_STORE_CTX_free(store_ctx);
         return NGX_DECLINED;
     }
@@ -339,7 +372,6 @@ ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl)
     ngx_log_debug1(NGX_LOG_DEBUG_EVENT, ssl->log, 0,
                    "SSL get issuer: found %p in cert store", issuer);
 
-    staple->cert = cert;
     staple->issuer = issuer;
 
     return NGX_OK;
@@ -347,14 +379,13 @@ ngx_ssl_stapling_issuer(ngx_conf_t *cf, ngx_ssl_t *ssl)
 
 
 static ngx_int_t
-ngx_ssl_stapling_responder(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *responder)
+ngx_ssl_stapling_responder(ngx_conf_t *cf, ngx_ssl_t *ssl,
+    ngx_ssl_stapling_t *staple, ngx_str_t *responder)
 {
-    ngx_url_t                  u;
     char                      *s;
-    ngx_ssl_stapling_t        *staple;
+    ngx_str_t                  rsp;
+    ngx_url_t                  u;
     STACK_OF(OPENSSL_STRING)  *aia;
-
-    staple = SSL_CTX_get_ex_data(ssl->ctx, ngx_ssl_stapling_index);
 
     if (responder->len == 0) {
 
@@ -364,7 +395,8 @@ ngx_ssl_stapling_responder(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *responder)
         if (aia == NULL) {
             ngx_log_error(NGX_LOG_WARN, ssl->log, 0,
                           "\"ssl_stapling\" ignored, "
-                          "no OCSP responder URL in the certificate");
+                          "no OCSP responder URL in the certificate \"%s\"",
+                          staple->name);
             return NGX_DECLINED;
         }
 
@@ -376,10 +408,13 @@ ngx_ssl_stapling_responder(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *responder)
         if (s == NULL) {
             ngx_log_error(NGX_LOG_WARN, ssl->log, 0,
                           "\"ssl_stapling\" ignored, "
-                          "no OCSP responder URL in the certificate");
+                          "no OCSP responder URL in the certificate \"%s\"",
+                          staple->name);
             X509_email_free(aia);
             return NGX_DECLINED;
         }
+
+        responder = &rsp;
 
         responder->len = ngx_strlen(s);
         responder->data = ngx_palloc(cf->pool, responder->len);
@@ -407,7 +442,9 @@ ngx_ssl_stapling_responder(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *responder)
     } else {
         ngx_log_error(NGX_LOG_WARN, ssl->log, 0,
                       "\"ssl_stapling\" ignored, "
-                      "invalid URL prefix in OCSP responder \"%V\"", &u.url);
+                      "invalid URL prefix in OCSP responder \"%V\" "
+                      "in the certificate \"%s\"",
+                      &u.url, staple->name);
         return NGX_DECLINED;
     }
 
@@ -415,7 +452,9 @@ ngx_ssl_stapling_responder(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *responder)
         if (u.err) {
             ngx_log_error(NGX_LOG_WARN, ssl->log, 0,
                           "\"ssl_stapling\" ignored, "
-                          "%s in OCSP responder \"%V\"", u.err, &u.url);
+                          "%s in OCSP responder \"%V\" "
+                          "in the certificate \"%s\"",
+                          u.err, &u.url, staple->name);
             return NGX_DECLINED;
         }
 
@@ -439,12 +478,17 @@ ngx_int_t
 ngx_ssl_stapling_resolver(ngx_conf_t *cf, ngx_ssl_t *ssl,
     ngx_resolver_t *resolver, ngx_msec_t resolver_timeout)
 {
+    X509                *cert;
     ngx_ssl_stapling_t  *staple;
 
-    staple = SSL_CTX_get_ex_data(ssl->ctx, ngx_ssl_stapling_index);
-
-    staple->resolver = resolver;
-    staple->resolver_timeout = resolver_timeout;
+    for (cert = SSL_CTX_get_ex_data(ssl->ctx, ngx_ssl_certificate_index);
+         cert;
+         cert = X509_get_ex_data(cert, ngx_ssl_next_certificate_index))
+    {
+        staple = X509_get_ex_data(cert, ngx_ssl_stapling_index);
+        staple->resolver = resolver;
+        staple->resolver_timeout = resolver_timeout;
+    }
 
     return NGX_OK;
 }
@@ -454,6 +498,7 @@ static int
 ngx_ssl_certificate_status_callback(ngx_ssl_conn_t *ssl_conn, void *data)
 {
     int                  rc;
+    X509                *cert;
     u_char              *p;
     ngx_connection_t    *c;
     ngx_ssl_stapling_t  *staple;
@@ -463,8 +508,14 @@ ngx_ssl_certificate_status_callback(ngx_ssl_conn_t *ssl_conn, void *data)
     ngx_log_debug0(NGX_LOG_DEBUG_EVENT, c->log, 0,
                    "SSL certificate status callback");
 
-    staple = data;
     rc = SSL_TLSEXT_ERR_NOACK;
+
+    cert = SSL_get_certificate(ssl_conn);
+    staple = X509_get_ex_data(cert, ngx_ssl_stapling_index);
+
+    if (staple == NULL) {
+        return rc;
+    }
 
     if (staple->staple.len
         && staple->valid >= ngx_time())
@@ -510,6 +561,7 @@ ngx_ssl_stapling_update(ngx_ssl_stapling_t *staple)
 
     ctx->cert = staple->cert;
     ctx->issuer = staple->issuer;
+    ctx->name = staple->name;
 
     ctx->addrs = staple->addrs;
     ctx->host = staple->host;
@@ -593,7 +645,13 @@ ngx_ssl_stapling_ocsp_handler(ngx_ssl_ocsp_ctx_t *ctx)
         goto error;
     }
 
-#if OPENSSL_VERSION_NUMBER >= 0x10001000L
+#ifdef SSL_CTRL_SELECT_CURRENT_CERT
+    /* OpenSSL 1.0.2+ */
+    SSL_CTX_select_current_cert(staple->ssl_ctx, ctx->cert);
+#endif
+
+#ifdef SSL_CTRL_GET_EXTRA_CHAIN_CERTS
+    /* OpenSSL 1.0.1+ */
     SSL_CTX_get_extra_chain_certs(staple->ssl_ctx, &chain);
 #else
     chain = staple->ssl_ctx->extra_certs;
@@ -714,10 +772,10 @@ error:
 static time_t
 ngx_ssl_stapling_time(ASN1_GENERALIZEDTIME *asn1time)
 {
-    u_char  *value;
+    BIO     *bio;
+    char    *value;
     size_t   len;
     time_t   time;
-    BIO     *bio;
 
     /*
      * OpenSSL doesn't provide a way to convert ASN1_GENERALIZEDTIME
@@ -737,7 +795,7 @@ ngx_ssl_stapling_time(ASN1_GENERALIZEDTIME *asn1time)
     ASN1_GENERALIZEDTIME_print(bio, asn1time);
     len = BIO_get_mem_data(bio, &value);
 
-    time = ngx_parse_http_time(value, len);
+    time = ngx_parse_http_time((u_char *) value, len);
 
     BIO_free(bio);
 
@@ -880,7 +938,6 @@ ngx_ssl_ocsp_resolve_handler(ngx_resolver_ctx_t *resolve)
 
     u_char           *p;
     size_t            len;
-    in_port_t         port;
     socklen_t         socklen;
     ngx_uint_t        i;
     struct sockaddr  *sockaddr;
@@ -922,8 +979,6 @@ ngx_ssl_ocsp_resolve_handler(ngx_resolver_ctx_t *resolve)
         goto failed;
     }
 
-    port = htons(ctx->port);
-
     for (i = 0; i < resolve->naddrs; i++) {
 
         socklen = resolve->addrs[i].socklen;
@@ -934,16 +989,7 @@ ngx_ssl_ocsp_resolve_handler(ngx_resolver_ctx_t *resolve)
         }
 
         ngx_memcpy(sockaddr, resolve->addrs[i].sockaddr, socklen);
-
-        switch (sockaddr->sa_family) {
-#if (NGX_HAVE_INET6)
-        case AF_INET6:
-            ((struct sockaddr_in6 *) sockaddr)->sin6_port = port;
-            break;
-#endif
-        default: /* AF_INET */
-            ((struct sockaddr_in *) sockaddr)->sin_port = port;
-        }
+        ngx_inet_set_port(sockaddr, ctx->port);
 
         ctx->addrs[i].sockaddr = sockaddr;
         ctx->addrs[i].socklen = socklen;
@@ -974,7 +1020,7 @@ failed:
 static void
 ngx_ssl_ocsp_connect(ngx_ssl_ocsp_ctx_t *ctx)
 {
-    ngx_int_t    rc;
+    ngx_int_t  rc;
 
     ngx_log_debug0(NGX_LOG_DEBUG_EVENT, ctx->log, 0,
                    "ssl ocsp connect");
@@ -1072,10 +1118,10 @@ ngx_ssl_ocsp_write_handler(ngx_event_t *wev)
 static void
 ngx_ssl_ocsp_read_handler(ngx_event_t *rev)
 {
-    ssize_t            n, size;
-    ngx_int_t          rc;
-    ngx_ssl_ocsp_ctx_t    *ctx;
-    ngx_connection_t  *c;
+    ssize_t              n, size;
+    ngx_int_t            rc;
+    ngx_connection_t    *c;
+    ngx_ssl_ocsp_ctx_t  *ctx;
 
     c = rev->data;
     ctx = c->data;
@@ -1219,7 +1265,7 @@ ngx_ssl_ocsp_create_request(ngx_ssl_ocsp_ctx_t *ctx)
 
     ngx_log_debug2(NGX_LOG_DEBUG_EVENT, ctx->log, 0,
                    "ssl ocsp request length %z, escape %d",
-                   base64.len, escape);
+                   base64.len, (int) escape);
 
     len = sizeof("GET ") - 1 + ctx->uri.len + sizeof("/") - 1
           + base64.len + 2 * escape + sizeof(" HTTP/1.0" CRLF) - 1
@@ -1279,12 +1325,11 @@ ngx_ssl_ocsp_process_status_line(ngx_ssl_ocsp_ctx_t *ctx)
     rc = ngx_ssl_ocsp_parse_status_line(ctx);
 
     if (rc == NGX_OK) {
-#if 0
-        ngx_log_debug2(NGX_LOG_DEBUG_EVENT, ctx->log, 0,
-                       "ssl ocsp status line \"%*s\"",
-                       ctx->response->pos - ctx->response->start,
-                       ctx->response->start);
-#endif
+        ngx_log_debug3(NGX_LOG_DEBUG_EVENT, ctx->log, 0,
+                       "ssl ocsp status %ui \"%*s\"",
+                       ctx->code,
+                       ctx->header_end - ctx->header_start,
+                       ctx->header_start);
 
         ctx->process = ngx_ssl_ocsp_process_headers;
         return ctx->process(ctx);
@@ -1445,6 +1490,7 @@ ngx_ssl_ocsp_parse_status_line(ngx_ssl_ocsp_ctx_t *ctx)
 
             if (++ctx->count == 3) {
                 state = sw_space_after_status;
+                ctx->header_start = p - 2;
             }
 
             break;
@@ -1462,6 +1508,7 @@ ngx_ssl_ocsp_parse_status_line(ngx_ssl_ocsp_ctx_t *ctx)
                 state = sw_almost_done;
                 break;
             case LF:
+                ctx->header_end = p;
                 goto done;
             default:
                 return NGX_ERROR;
@@ -1475,6 +1522,7 @@ ngx_ssl_ocsp_parse_status_line(ngx_ssl_ocsp_ctx_t *ctx)
                 state = sw_almost_done;
                 break;
             case LF:
+                ctx->header_end = p;
                 goto done;
             }
             break;
@@ -1483,6 +1531,7 @@ ngx_ssl_ocsp_parse_status_line(ngx_ssl_ocsp_ctx_t *ctx)
         case sw_almost_done:
             switch (ch) {
             case LF:
+                ctx->header_end = p - 1;
                 goto done;
             default:
                 return NGX_ERROR;
@@ -1577,10 +1626,11 @@ ngx_ssl_ocsp_process_headers(ngx_ssl_ocsp_ctx_t *ctx)
     return ctx->process(ctx);
 }
 
+
 static ngx_int_t
 ngx_ssl_ocsp_parse_header_line(ngx_ssl_ocsp_ctx_t *ctx)
 {
-    u_char      c, ch, *p;
+    u_char  c, ch, *p;
     enum {
         sw_start = 0,
         sw_name,
@@ -1790,12 +1840,27 @@ ngx_ssl_ocsp_log_error(ngx_log_t *log, u_char *buf, size_t len)
     if (log->action) {
         p = ngx_snprintf(buf, len, " while %s", log->action);
         len -= p - buf;
+        buf = p;
     }
 
     ctx = log->data;
 
     if (ctx) {
-        p = ngx_snprintf(p, len, ", responder: %V", &ctx->host);
+        p = ngx_snprintf(buf, len, ", responder: %V", &ctx->host);
+        len -= p - buf;
+        buf = p;
+    }
+
+    if (ctx && ctx->peer.name) {
+        p = ngx_snprintf(buf, len, ", peer: %V", ctx->peer.name);
+        len -= p - buf;
+        buf = p;
+    }
+
+    if (ctx && ctx->name) {
+        p = ngx_snprintf(buf, len, ", certificate: \"%s\"", ctx->name);
+        len -= p - buf;
+        buf = p;
     }
 
     return p;
@@ -1814,6 +1879,7 @@ ngx_ssl_stapling(ngx_conf_t *cf, ngx_ssl_t *ssl, ngx_str_t *file,
 
     return NGX_OK;
 }
+
 
 ngx_int_t
 ngx_ssl_stapling_resolver(ngx_conf_t *cf, ngx_ssl_t *ssl,
