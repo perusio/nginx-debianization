@@ -207,7 +207,7 @@ ngx_http_range_header_filter(ngx_http_request_t *r)
         if_range_time = ngx_parse_http_time(if_range->data, if_range->len);
 
         ngx_log_debug2(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
-                       "http ir:%d lm:%d",
+                       "http ir:%T lm:%T",
                        if_range_time, r->headers_out.last_modified_time);
 
         if (if_range_time != r->headers_out.last_modified_time) {
@@ -223,12 +223,6 @@ parse:
     }
 
     ctx->offset = r->headers_out.content_offset;
-
-    if (ngx_array_init(&ctx->ranges, r->pool, 1, sizeof(ngx_http_range_t))
-        != NGX_OK)
-    {
-        return NGX_ERROR;
-    }
 
     ranges = r->single_range ? 1 : clcf->max_ranges;
 
@@ -289,6 +283,12 @@ ngx_http_range_parse(ngx_http_request_t *r, ngx_http_range_filter_ctx_t *ctx,
             ctx->ranges = mctx->ranges;
             return NGX_OK;
         }
+    }
+
+    if (ngx_array_init(&ctx->ranges, r->pool, 1, sizeof(ngx_http_range_t))
+        != NGX_OK)
+    {
+        return NGX_ERROR;
     }
 
     p = r->headers_in.range->value.data + 6;
@@ -665,7 +665,7 @@ ngx_http_range_test_overlapped(ngx_http_request_t *r,
         range = ctx->ranges.elts;
         for (i = 0; i < ctx->ranges.nelts; i++) {
             if (start > range[i].start || last < range[i].end) {
-                 goto overlapped;
+                goto overlapped;
             }
         }
     }
@@ -750,7 +750,8 @@ ngx_http_range_singlepart_body(ngx_http_request_t *r,
                 buf->last -= (size_t) (last - range->end);
             }
 
-            buf->last_buf = 1;
+            buf->last_buf = (r == r->main) ? 1 : 0;
+            buf->last_in_chain = 1;
             *ll = cl;
             cl->next = NULL;
 

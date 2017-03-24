@@ -199,7 +199,7 @@ ngx_http_upstream_get_ip_hash_peer(ngx_peer_connection_t *pc, void *data)
         }
 
         ngx_log_debug2(NGX_LOG_DEBUG_HTTP, pc->log, 0,
-                       "get ip hash peer, hash: %ui %04XA", p, m);
+                       "get ip hash peer, hash: %ui %04XL", p, (uint64_t) m);
 
         if (peer->down) {
             goto next;
@@ -209,6 +209,10 @@ ngx_http_upstream_get_ip_hash_peer(ngx_peer_connection_t *pc, void *data)
             && peer->fails >= peer->max_fails
             && now - peer->checked <= peer->fail_timeout)
         {
+            goto next;
+        }
+
+        if (peer->max_conns && peer->conns >= peer->max_conns) {
             goto next;
         }
 
@@ -259,6 +263,7 @@ ngx_http_upstream_ip_hash(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 
     uscf->flags = NGX_HTTP_UPSTREAM_CREATE
                   |NGX_HTTP_UPSTREAM_WEIGHT
+                  |NGX_HTTP_UPSTREAM_MAX_CONNS
                   |NGX_HTTP_UPSTREAM_MAX_FAILS
                   |NGX_HTTP_UPSTREAM_FAIL_TIMEOUT
                   |NGX_HTTP_UPSTREAM_DOWN;

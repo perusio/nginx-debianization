@@ -75,7 +75,7 @@ if test -z "$NGX_KQUEUE_CHECKED"; then
     ngx_feature_incs="#include <sys/event.h>"
     ngx_feature_path=
     ngx_feature_libs=
-    ngx_feature_test="int kq; kq = kqueue()"
+    ngx_feature_test="(void) kqueue()"
     . auto/feature
 
     if [ $ngx_found = yes ]; then
@@ -92,7 +92,8 @@ if test -z "$NGX_KQUEUE_CHECKED"; then
         ngx_feature_path=
         ngx_feature_libs=
         ngx_feature_test="struct kevent  kev;
-                          kev.fflags = NOTE_LOWAT;"
+                          kev.fflags = NOTE_LOWAT;
+                          (void) kev"
         . auto/feature
 
 
@@ -260,11 +261,11 @@ ngx_feature_run=no
 ngx_feature_incs="#include <dlfcn.h>"
 ngx_feature_path=
 ngx_feature_libs=
-ngx_feature_test="dlopen(NULL, 0); dlsym(NULL, NULL)"
+ngx_feature_test="dlopen(NULL, RTLD_NOW | RTLD_GLOBAL); dlsym(NULL, \"\")"
 . auto/feature
 
 
-if [ $ngx_found != yes ]; then
+if [ $ngx_found = no ]; then
 
     ngx_feature="dlopen() in libdl"
     ngx_feature_libs="-ldl"
@@ -287,7 +288,7 @@ ngx_feature_test="sched_yield()"
 . auto/feature
 
 
-if [ $ngx_found != yes ]; then
+if [ $ngx_found = no ]; then
 
     ngx_feature="sched_yield() in librt"
     ngx_feature_libs="-lrt"
@@ -326,6 +327,96 @@ ngx_feature_incs="#include <sys/socket.h>"
 ngx_feature_path=
 ngx_feature_libs=
 ngx_feature_test="setsockopt(0, SOL_SOCKET, SO_ACCEPTFILTER, NULL, 0)"
+. auto/feature
+
+
+# NetBSD bind to any address for transparent proxying
+
+ngx_feature="SO_BINDANY"
+ngx_feature_name="NGX_HAVE_TRANSPARENT_PROXY"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="setsockopt(0, SOL_SOCKET, SO_BINDANY, NULL, 0)"
+. auto/feature
+
+
+# Linux IP_BIND_ADDRESS_NO_PORT
+
+ngx_feature="IP_BIND_ADDRESS_NO_PORT"
+ngx_feature_name="NGX_HAVE_IP_BIND_ADDRESS_NO_PORT"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>
+                  #include <netinet/in.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="setsockopt(0, IPPROTO_IP, IP_BIND_ADDRESS_NO_PORT, NULL, 0)"
+. auto/feature
+
+
+# Linux transparent proxying
+
+ngx_feature="IP_TRANSPARENT"
+ngx_feature_name="NGX_HAVE_TRANSPARENT_PROXY"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>
+                  #include <netinet/in.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="setsockopt(0, IPPROTO_IP, IP_TRANSPARENT, NULL, 0)"
+. auto/feature
+
+
+# FreeBSD bind to any address for transparent proxying
+
+ngx_feature="IP_BINDANY"
+ngx_feature_name="NGX_HAVE_TRANSPARENT_PROXY"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>
+                  #include <netinet/in.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="setsockopt(0, IPPROTO_IP, IP_BINDANY, NULL, 0)"
+. auto/feature
+
+
+# BSD way to get IPv4 datagram destination address
+
+ngx_feature="IP_RECVDSTADDR"
+ngx_feature_name="NGX_HAVE_IP_RECVDSTADDR"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>
+                  #include <netinet/in.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="setsockopt(0, IPPROTO_IP, IP_RECVDSTADDR, NULL, 0)"
+. auto/feature
+
+
+# Linux way to get IPv4 datagram destination address
+
+ngx_feature="IP_PKTINFO"
+ngx_feature_name="NGX_HAVE_IP_PKTINFO"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>
+                  #include <netinet/in.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="setsockopt(0, IPPROTO_IP, IP_PKTINFO, NULL, 0)"
+. auto/feature
+
+
+# RFC 3542 way to get IPv6 datagram destination address
+
+ngx_feature="IPV6_RECVPKTINFO"
+ngx_feature_name="NGX_HAVE_IPV6_RECVPKTINFO"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>
+                  #include <netinet/in.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="setsockopt(0, IPPROTO_IPV6, IPV6_RECVPKTINFO, NULL, 0)"
 . auto/feature
 
 
@@ -402,9 +493,9 @@ if [ $NGX_FILE_AIO = YES ]; then
     ngx_feature_incs="#include <aio.h>"
     ngx_feature_path=
     ngx_feature_libs=
-    ngx_feature_test="int  n; struct aiocb  iocb;
+    ngx_feature_test="struct aiocb  iocb;
                       iocb.aio_sigevent.sigev_notify = SIGEV_KEVENT;
-                      n = aio_read(&iocb)"
+                      (void) aio_read(&iocb)"
     . auto/feature
 
     if [ $ngx_found = yes ]; then
@@ -424,6 +515,7 @@ if [ $NGX_FILE_AIO = YES ]; then
                           iocb.aio_lio_opcode = IOCB_CMD_PREAD;
                           iocb.aio_flags = IOCB_FLAG_RESFD;
                           iocb.aio_resfd = -1;
+                          (void) iocb;
                           (void) eventfd(0, 0)"
         . auto/feature
 
@@ -439,11 +531,12 @@ if [ $NGX_FILE_AIO = YES ]; then
         ngx_feature="Linux AIO support (SYS_eventfd)"
         ngx_feature_incs="#include <linux/aio_abi.h>
                           #include <sys/syscall.h>"
-        ngx_feature_test="int  n = SYS_eventfd;
-                          struct iocb  iocb;
+        ngx_feature_test="struct iocb  iocb;
                           iocb.aio_lio_opcode = IOCB_CMD_PREAD;
                           iocb.aio_flags = IOCB_FLAG_RESFD;
-                          iocb.aio_resfd = -1;"
+                          iocb.aio_resfd = -1;
+                          (void) iocb;
+                          (void) SYS_eventfd"
         . auto/feature
 
         if [ $ngx_found = yes ]; then
@@ -481,7 +574,7 @@ else
 
         ngx_feature="eventfd() (SYS_eventfd)"
         ngx_feature_incs="#include <sys/syscall.h>"
-        ngx_feature_test="int n = SYS_eventfd"
+        ngx_feature_test="(void) SYS_eventfd"
         . auto/feature
     fi
 fi
@@ -508,6 +601,7 @@ ngx_param=NGX_PTR_SIZE; ngx_value=$ngx_size; . auto/types/value
 
 NGX_INCLUDE_AUTO_CONFIG_H="#include \"ngx_auto_config.h\""
 
+ngx_type="uint32_t"; ngx_types="u_int32_t"; . auto/types/typedef
 ngx_type="uint64_t"; ngx_types="u_int64_t"; . auto/types/typedef
 
 ngx_type="sig_atomic_t"; ngx_types="int"; . auto/types/typedef
@@ -516,7 +610,7 @@ ngx_param=NGX_SIG_ATOMIC_T_SIZE; ngx_value=$ngx_size; . auto/types/value
 
 ngx_type="socklen_t"; ngx_types="int"; . auto/types/typedef
 
-ngx_type="in_addr_t"; ngx_types="uint32_t"; . auto/types/typedef
+ngx_type="in_addr_t"; ngx_types="uint32_t u_int32_t"; . auto/types/typedef
 
 ngx_type="in_port_t"; ngx_types="u_short"; . auto/types/typedef
 
@@ -543,19 +637,18 @@ ngx_param=NGX_MAX_TIME_T_VALUE; ngx_value=$ngx_max_value; . auto/types/value
 # syscalls, libc calls and some features
 
 
-if [ $NGX_IPV6 = YES ]; then
-    ngx_feature="AF_INET6"
-    ngx_feature_name="NGX_HAVE_INET6"
-    ngx_feature_run=no
-    ngx_feature_incs="#include <sys/socket.h>
-                      #include <netinet/in.h>
-                      #include <arpa/inet.h>"
-    ngx_feature_path=
-    ngx_feature_libs=
-    ngx_feature_test="struct sockaddr_in6  sin6;
-                      sin6.sin6_family = AF_INET6;"
-    . auto/feature
-fi
+ngx_feature="AF_INET6"
+ngx_feature_name="NGX_HAVE_INET6"
+ngx_feature_run=no
+ngx_feature_incs="#include <sys/socket.h>
+                  #include <netinet/in.h>
+                  #include <arpa/inet.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="struct sockaddr_in6  sin6;
+                  sin6.sin6_family = AF_INET6;
+                  (void) sin6"
+. auto/feature
 
 
 ngx_feature="setproctitle()"
