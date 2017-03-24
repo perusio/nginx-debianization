@@ -1,3 +1,9 @@
+nginx (1.11.11-perusio.1.0) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- António P. P. Almeida <appa@perusio.net>  Fri, 24 Mar 2017 02:42:10 +0100
+
 nginx (1.9.12-perusio.1.0) unstable; urgency=medium
 
   * New upstream version.
